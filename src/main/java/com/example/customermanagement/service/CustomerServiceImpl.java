@@ -45,4 +45,14 @@ public class CustomerServiceImpl implements CustomerService{
     public void remove(int id) {
         customers.remove(id);
     }
+
+    public List<Customer> findByName(String name) {
+        List<Customer> tempList = new ArrayList<>();
+        for (Integer key: customers.keySet()) {
+            if (customers.get(key).getName().equals(name)) {
+                tempList.add(customers.get(key));
+            }
+        }
+        return tempList;
+    }
 }

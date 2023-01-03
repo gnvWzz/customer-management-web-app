@@ -29,12 +29,27 @@ public class CustomerServlet extends HttpServlet {
             case "delete":
                 showDeleteForm(request, response);
                 break;
+            case "search":
+                searchCustomer(request,response);
+                break;
             case "view":
                 viewCustomer(request, response);
                 break;
             default:
                 listCustomers(request, response);
                 break;
+        }
+    }
+
+    private void searchCustomer(HttpServletRequest request, HttpServletResponse response) {
+        String name = request.getParameter("searchedName");
+        List<Customer> customerList = customerService.findByName(name);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("customer/list.jsp");
+        request.setAttribute("customers",customerList);
+        try {
+            dispatcher.forward(request,response);
+        } catch (IOException | ServletException exception) {
+            exception.printStackTrace();
         }
     }
 
